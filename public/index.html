@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Country Info Finder</title>
+</head>
+<body>
+  <h1>Country Info Finder</h1>
+  <input type="text" id="country" placeholder="Enter country name">
+  <button onclick="getCountryInfo()">Get Info</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function getCountryInfo() {
+      const country = document.getElementById('country').value;
+      const res = await fetch("/get-country-info", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country })
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = data.info || data.error;
+    }
+  </script>
+</body>
+</html>
